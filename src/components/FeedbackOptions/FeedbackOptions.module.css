@@ -1,0 +1,21 @@
+.feedbackOptions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #010101;
+    width: 100%;
+}
+
+.button {
+    background-color: #fff;
+    color: #010101;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    text-transform: uppercase;
+    margin-right: 10px;
+}

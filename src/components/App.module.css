@@ -1,0 +1,29 @@
+.AppComponent {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    color: #010101;
+    padding: 40px;
+}
+
+.AppName {
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionReviews {
+    width: 100%;
+    padding: 20px;
+    background-color: #343541;
+    color: #FFFFFF;
+}
+
+.sectionStatistics {
+    width: 100%;
+    padding: 20px;
+    background-color: #202123;
+    color: #FFFFFF;
+}

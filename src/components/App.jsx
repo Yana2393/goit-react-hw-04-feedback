@@ -1,84 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FeedbackOptions from './FeedbackOptions';
-import Statistics from './Statistics';
-import Section from './Section';
-import Notification from './Notification';
+import {FeedbackOptions} from './FeedbackOptions/FeedbackOptions';
+import {Statistics} from './Statistics/Statistics';
+import {Section} from './Section/Section';
+import Notification from './Notification/Notification';
+import css from './App.module.css'
 
-export class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
-  }
+export const App = () => {
+  const [state, setState] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
 
-  onLeaveFeedback(reviewPoint) {
-    this.setState(prevState => {
-      const pointValue = prevState[reviewPoint] + 1;
-      return { [reviewPoint]: pointValue };
+  const options = ['good', 'neutral', 'bad'];
+
+  const countTotalFeedback = () => {
+    return state.good + state.neutral + state.bad;
+  };
+
+  function onLeaveFeedback(reviewPoint) {
+    setState(oldState => {
+      const pointValue = oldState[reviewPoint] + 1;
+      return { ...oldState, [reviewPoint]: pointValue };
     });
   }
 
-  render() {
-    const options = ['good', 'neutral', 'bad'];
-    const { good, neutral, bad } = this.state;
-    const total = good + neutral + bad;
-    const positivePercentage = total === 0 ? 0 : Math.round((good * 100) / total);
+  const countPositiveFeedbackPercentage = () => {
+    if (countTotalFeedback() === 0) {
+      return 0;
+    }
+    return Math.round((state.good * 100) / countTotalFeedback());
+  };
 
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 36,
-          color: '#010101',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              padding: 20,
-              backgroundColor: '#202123',
-              color: '#FFFFFF',
-            }}
-          >
+      <div className={css.AppComponent}>
+        <div className={css.AppName}>
+          <div className={css.sectionReviews}>
             <Section title="Reviews Widget">
               <FeedbackOptions
                 options={options}
-                onLeaveFeedback={this.onLeaveFeedback.bind(this)}
+                onLeaveFeedback={onLeaveFeedback}
               />
             </Section>
           </div>
-          <div
-            style={{
-              width: '100%',
-              padding: 20,
-              backgroundColor: '#343541',
-              color: '#FFFFFF',
-            }}
-          >
+          <div className={css.sectionStatistics} >
             <Section title="Statistics">
-              {total === 0 ? (
+              {countTotalFeedback() === 0 ? (
                 <Notification message="There is no feedback" />
               ) : (
                 <Statistics
-                  good={good}
-                  neutral={neutral}
-                  bad={bad}
-                  total={total}
-                  positivePercentage={positivePercentage}
+                  good={state.good}
+                  neutral={state.neutral}
+                  bad={state.bad}
+                  total={countTotalFeedback()}
+                  positivePercentage={countPositiveFeedbackPercentage()}
                 />
               )}
             </Section>
@@ -86,7 +62,7 @@ export class App extends React.Component {
         </div>
       </div>
     );
-  }
+  
 }
 
 App.propTypes = {

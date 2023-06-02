@@ -1,17 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import css from './Notification.module.css'
 
 const Notification = ({ message }) => {
   return (
-    <div
-      style={{
-        backgroundColor: '#f8d7da',
-        color: '#721c24',
-        padding: '10px 20px',
-        borderRadius: '4px',
-        marginBottom: '20px',
-      }}
-    >
+    <div className={css.notification}>
       {message}
     </div>
   );
